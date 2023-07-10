@@ -25,12 +25,22 @@ public class VeterinaryController {
 
     */
 
+
     @GetMapping("/Vete/name")
     public ResponseEntity<String> getVeterinaryName(@RequestParam int VeterinaryId){
         Util.getInstance();
         Veterinary vete = Util.getInstance().getValue(VeterinaryId).get(0);
-        return new ResponseEntity<>(vete.getVetName(), HttpStatus.OK);
+        if (vete == null){
+            return new ResponseEntity<>(null,HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(vete.getVetName(), HttpStatus.OK);
+        }
+
     }
+    /*
+    http://localhost:8082/Vete/name?VeterinaryId=207340817
+
+    */
 
     @PutMapping("/Vete/save/{veteid}")
     public ResponseEntity<String> veteSave(@PathVariable int veteid, @RequestBody Veterinary vete){
